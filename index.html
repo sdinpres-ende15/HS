@@ -529,7 +529,33 @@
         font-size: 13px;
         color: var(--muted);
       }
-    </style>
+    
+@media (max-width: 1100px) {
+  .app {
+    height: 100vh !important; /* agar tidak terpotong di hp */
+  }
+  body {
+    overflow-y: auto !important; /* biar bisa digulir di hp */
+  }
+  .composer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    background: #fff;
+    z-index: 100;
+  }
+  .chat-body {
+    padding-bottom: 90px !important; /* agar pesan terakhir tidak tertutup composer */
+  }
+}
+
+
+.composer { display: none; }
+.chat-active .composer { display: flex; }
+
+</style>
   </head>
   <body>
     <div
@@ -1018,6 +1044,7 @@
         }
 
         activeContactId = id;
+        mainApp.classList.add('chat-active');
         chatBody.innerHTML = "";
         const c = contacts.find((x) => x.id === id);
         if (!c) return;
@@ -1087,6 +1114,7 @@
         chatBackBtn.addEventListener("click", () => {
           if (window.innerWidth <= 1100) {
             mainApp.classList.remove("show-chat");
+            mainApp.classList.remove('chat-active');
           }
         });
       }
